@@ -1,0 +1,708 @@
+@use './colors' as color;
+@use './components' as components;
+@use './mixins' as mixins;
+
+*, *::before, *::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.6%;
+    scroll-behavior: smooth;
+}
+body {
+    font-family:'Open Sans', sans-serif;;
+}
+
+//nav
+
+
+.burger-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1em;
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    z-index: 10;
+    &:focus{
+        outline: none;
+        border: 1px solid rgba(255,255,255,.5);
+        border-radius: 8px;
+    }
+
+    &:hover {
+        .burger-btn__bars::after, .burger-btn__bars::before{
+            width: 100%;
+        }
+
+    }
+    &__box {
+        position: relative;
+        width: 40px;
+        height: 30px;
+     }
+     &__bars, &__bars::before, &__bars::after {
+        position: absolute;
+        right: 0;
+        height: 3px;
+        content:'';
+        background-color: color.$white;
+        transition: width .3s;
+     }
+     &__bars {
+        width: 100%;
+        &::after {
+            top: 13px;
+            width: 60%;
+        }
+        &::before {
+            top: 27px;
+            width: 30%;
+            transition-delay: .2s;
+        }
+     }
+}
+.nav{ 
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    transform: translateX(100%);
+    transition: transform .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background-image: color.$blue-gradient-solid;
+    z-index: 4;
+
+    &--active {
+        transform: translateX(0);
+    }
+    &__item {
+        position: relative;
+        display: block;
+        margin: 0.5em 0;
+        padding: 0.5em 2em;
+        font-size: 2.8rem;
+        color: color.$white;
+        text-decoration: none;
+        text-transform: uppercase;
+
+        &::before{
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            width: 3px;
+            height: 100%;
+            transform: scaleY(0);
+            background-color: color.$white;
+            transition: transform .3s;
+        }
+        &:hover::before {
+            transform: scaleY(1);
+        }
+    }
+}
+.black-bars-color,
+.black-bars-color::after,
+.black-bars-color::before{
+    background-color: color.$dark;
+
+}
+
+@keyframes navItemsAnimation{
+    from{
+        transform: translateX(200%);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+.nav-items-animation {
+    animation:navItemsAnimation 1s both ;
+}
+
+.header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2em;
+    height: 75vh;
+    text-align: center;
+    color: color.$white;
+    @include mixins.heroimages ('../img/header-small.jpg');
+    background-attachment: scroll;
+
+    &__heading {
+        font-family: 'Dancing Script', cursive;
+        font-size: 4.8rem;
+        font-weight: 300;
+    }
+    &__text {
+        font-size: 1.4rem;
+    }
+    &__btn {
+        margin-top: 2em;
+        padding: 0.8em 1.6em;
+        font-size: 1.4rem;
+        background: color.$white;
+        border: none;
+        border-radius: 8px;
+        color: color.$dark;
+        text-decoration: none;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        &::before {
+            background-color: color.$light-white;
+        }
+    }
+} 
+
+.hobbies {
+    &__box {
+        display: flex; 
+        flex-direction: column; 
+        margin: 2em 0;
+    }
+    &__img{
+        width: 100%;
+        margin-bottom: 1em;
+    }
+    &__tittle{
+        margin-bottom: 0.5em;
+    }
+    &__text {
+        font-size: 1.4rem;
+    }
+}
+
+.hero-img {
+    position: relative;
+    padding: 10em 2em;
+    @include mixins.heroimages('../img/code-small.jpg');
+    text-align: center;
+    color: color.$white;
+    overflow: hidden;
+
+
+    &__title{
+        font-family: 'Dancing script', cursive;
+        margin-bottom: 0.5em;
+        font-size: 4.8rem;
+    }
+    &__text{
+        padding: 1em 0;
+    }
+}
+
+
+
+.skills {
+    &__card{
+        position: relative;
+        margin: 1em 0;
+        height: 450px;
+        color: color.$white;
+        text-align: center;
+        perspective: 700px;
+        &:hover  {
+            .skills__card-img{
+             transform: rotateY(-180deg);
+                opacity: 0;
+            }
+        
+            .skills__card-info {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+    
+        &-img{
+            padding: 2em;
+            height: 100%;
+            border-radius: 8px;
+            background-size: cover;
+            transition: transform 1s ,opacity 1s;
+            
+
+            &--first{
+                background-image: color.$light-blue-gradient ,url('../img/html5-logo.png');
+            }
+            &--second{
+                background-image: color.$blue-gradient ,url('../img/css3Logo.jpg');
+            }
+            &--third{
+                background-image: color.$purple-gradient ,url('../img/css3-1841590_640.png');
+            }
+            &-title {
+                font-family: 'Dancing Script', cursive;
+                font-size: 2.8rem;
+            }
+            &-info {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                font-size: 1.8rem;
+
+                i {
+                    margin-right: 0.3em;
+                }
+            }
+        }
+        &-info {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-image: color.$light-blue-gradient-solid;
+            border-radius: 8px;
+            opacity: 0;
+            transform: rotateY(180deg);
+            transition: transform 1s, opacity 1s;
+           
+            &-title{
+                @include mixins.cardStyles; 
+                top:1.2em;
+                font-family: 'Dancing Script', cursive;
+                font-size: 2.8rem;
+                color:aqua;
+            }
+
+        &-list{
+            margin: 0 auto;
+            width: 70%;
+            list-style:none;
+           &-item{
+            padding: 1em;
+            font-size: 1.4rem;
+            border-bottom: 1px solid color.$light-white;
+
+            &:last-child {
+                border-bottom: none;
+            }
+           }
+        }
+        &-btn {
+           @include mixins.cardStyles;           
+            bottom: 2em;
+            padding: 1em;
+            border-radius: 8px;
+            width: 80%;
+            border:none;
+            background-color: color.$green-color;
+            cursor: pointer;
+            &::before {
+                background-color: color.$green-color-hover;
+            }
+        }
+        }
+    
+    } 
+}
+
+
+.portfolio {
+    position: relative;
+    @include mixins.heroimages('../img/bgismall.jpg');
+    overflow: hidden;
+    .section-heading {
+        color:color.$white;
+    }
+    &__item {
+        margin: 1em 0;
+        box-shadow: 5px 5px 10px #2e2e2e2e;
+        background-color: color.$white;
+        overflow: hidden;
+
+
+        &-img {
+            width: 100%;transition: transform .3s;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+        &-info {
+            padding: 2em;
+            background-color: color.$white;
+            z-index: 3;
+        }
+        &-heading {
+            margin-bottom: 0.5em;
+            font-size: 2.4rem;
+            font-weight: 300;
+        }
+        &-text {
+            margin-bottom: 0.5em;
+            font-size: 1.3rem;
+            color:color.$dark
+        }
+        &-btn{
+            margin-top: 1em;
+            padding: 0.8em;
+            width: 100%;
+            color:color.$white;
+            background-color: color.$main-color;
+            border:none;
+            border-radius: 8px;
+            cursor: pointer;
+
+
+            &::before {
+                background-color: color.$secondary-color;
+            }
+        }
+    }
+}
+@media (max-width:767px){
+    .reviews.section-padding {
+        padding: 6em 0;
+    }
+}
+.reviews {
+    &__box {
+        position: relative;
+        margin: 2em;
+        padding: 2em;
+        border-radius: 8px;
+        box-shadow:3px 3px 10px #2e2e2e2e;
+        transition: transform .3s;
+
+&:hover {
+    transform: scale(.95);
+}
+        &-img{
+            position: absolute;
+            top: 8%;
+            left: 75%;
+            transform: translate(-50%,-50%);
+            img{
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+        &-quote {
+            margin-bottom: 1em;
+            font-size: 3rem;
+            color: color.$main-color;
+        }
+        &-text {
+            margin-bottom: 1em;
+            font-size: 1.4rem;
+            color: color.$dark;
+        }
+    } 
+
+}
+
+.contact {
+    position: relative;
+    background-color: color.$light-white;
+    overflow: hidden;
+
+    .opacity-block-left {
+        background-color: color.$dark;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+        &-top {
+            display: flex;
+            flex-direction: column;
+        }&-label {
+            margin-bottom: .5em;
+            text-transform: uppercase;
+    }
+    &-input{
+        @include mixins.contactForm;
+
+    }
+    &-textarea{
+        @include mixins.contactForm;
+        resize: vertical;
+
+    }
+    &-btn {
+        align-self: flex-end;
+        padding: 1em;
+        width: 100%;
+        max-width: 300px;
+        color: color.$white;
+        border:none;
+        border-radius: 8px;
+        background-color: color.$main-color;
+        cursor: pointer;
+
+&::before {
+    background-color: color.$secondary-color;
+}    }
+    }
+}
+
+
+
+
+
+.footer {
+    color:color.$white;
+    background-color: color.$dark;
+    .wrapper{
+        padding: 6em 2em 2em;
+    } &__box {
+        font-size: 1.4rem;
+        &-desktop {
+            display: none;
+      }
+      &-title {
+        margin-bottom: 1em;
+        font-size: 3rem;
+        text-transform: uppercase;
+      }
+      &-social {
+        margin: 2em 0 1em;
+      }
+      &-link{
+        padding: 0 .3em;
+        color: color.$white;
+        font-size: 3.6rem;
+        text-decoration: none;
+        transition: color .3s;
+        
+        &:first-child{
+            padding-left: 0;
+        }
+
+        &:hover {
+            color:color.$light-white
+        }
+      }
+  
+    }    &__bottom-text {
+        padding: 2em;
+        text-align: center;
+        font-size: 1.3rem;
+      }
+}
+
+
+//media
+
+
+
+
+@media(min-width:576px){
+    .hobbies{
+        &__box{
+            flex-direction: row;
+            justify-content: space-between;
+            &-text {
+                width: 55%;
+
+                &--right {
+                    text-align: right;
+                }
+            }
+            &-img{
+                width: 40%;
+                &--right{
+                    order: 1;
+                }
+            }
+        }
+    &__img{
+        margin-bottom: 0;
+        max-height: 300px;
+    }
+    }
+    .portfolio {
+        &__item {
+            display: flex;
+            margin: 2em 0;
+            width: 100%;
+
+            &-img {
+                width: 50%;
+                height: auto;
+
+                &--right{
+                    order:1;
+                }
+            }
+            &-info{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            &-heading {
+            margin-bottom: 0.5em;
+            font-size: 3.6rem;
+
+            }
+        }
+    }
+}
+
+
+
+
+@media(min-width:768px) {
+    .opacity-block {
+        height: 50px;
+        width: 45%;
+         }
+    .header {
+        &__heading {
+            font-size: 6.6rem;
+        }
+        &__text{
+            font-size: 2.2rem;
+        }
+        &__btn{
+            font-size: 1.6rem;
+        }
+    }
+    .hobbies {
+        &__text {
+            font-size: 1.8rem;
+        }
+    }
+    .hero-img {
+        padding: 30em 2em;
+
+        hr{
+            margin: 0 auto;
+            width: 70%;
+        }
+        &__text {
+            font-size: 2.2rem;
+        }
+
+    }.skills{
+        &__cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        &__card {
+            margin: 1em;
+            width: 45%;
+        }
+    }
+    .footer{
+        &__boxes{
+            display: flex;
+            justify-content: space-between;
+        }
+        &__box{
+            margin: 0 2em;
+            width: 25%;
+
+            &:first-child{
+                width: 50%;
+            }
+            &-desktop{
+                display: block;
+            }
+            &-title {
+                font-size: 2.4rem;
+ 
+            }
+            &-list {
+                list-style: none;
+               &-item{
+                    margin-bottom: 1em;
+                    
+                    a{
+                        color:color.$light-white;
+                       text-decoration: none;
+                       
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+@media(min-width:992px) {
+    .burger-btn {
+        top: 50px;
+        right: 50px;
+    }
+    .header{
+        background-image:color.$blue-gradient, url('../img/header-big.jpg');
+        &__heading {
+            font-size: 10rem;
+        }
+    }
+    .nav {
+        &__item{
+          font-size: 4.8rem;
+        }
+      }
+    
+      .hobbies {
+        &__box{
+          margin: 5em 0;
+
+          &-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-bottom: 2.5em;
+          }
+        }
+        &__title {
+            font-size: 3.6rem;
+        }
+        &__text {
+            font-size: 2.2rem;
+        }
+      }
+      .hero-img{
+        padding: 40em 2em;
+        background-image: color.$blue-gradient ,url('../img/code-big.jpg');
+        &__title{
+            font-size: 7.2rem;
+        }
+        hr{
+            width: 60%;
+            max-width: 900px;
+        }
+      }
+      .portfolio {
+        background-image:color.$blue-gradient ,url('../img/bgibig.jpg');
+
+        &__item {
+            &-img {
+                object-fit: cover;
+                height: 300px;
+            }
+        }&-text {
+            font-size: 1.5rem;
+        }
+      }
+
+}
+@media(min-width:1100px) {
+    .skills {
+        &__card {
+            width: 30%;
+        }
+    }
+}
